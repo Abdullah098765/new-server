@@ -1,0 +1,4 @@
+msg = 'Andjs'
+print(msg)
+
+
