@@ -1,4 +1,0 @@
-msg = 'Andjs'
-print(msg)
-
-

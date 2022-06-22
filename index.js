@@ -32,16 +32,23 @@ app.use(bodyParser.json({
 }));
 app.use(cors());
 
+var md = ''
+app.post('/message', function (req, res) {
+
+  console.log(req.body)
+  md = req.body
+  res.send('SF Post ')
 
 
+})
 
 
-// app.get('/message', function (req,res ) {
+app.get('/message', function (req, res) {
 
-//   console.log('data')
-//   res.send('message')
+  console.log('data')
+  res.send(md)
 
-// })
+})
 
 
 
@@ -49,15 +56,15 @@ const io = new Server();
 
 
 
-app.set('port',process.env.PORT || 4000 );
-const server = app.listen(app.get('port'),()=>{console.log('Express ' + server.address().port)})
-io.attach(server)
+app.set('port', process.env.PORT || 4000);
+const server = app.listen(app.get('port'), () => { console.log('Express ' + server.address().port) })
+// io.attach(server)
 
-io.on('connection',(socket)=>{
-  console.log('connected')
-  socket.on('send', (a)=>{
-console.log(a)
-socket.emit('receive', a)
-  })
+// io.on('connection',(socket)=>{
+//   console.log('connected')
+//   socket.on('send', (a)=>{
+// console.log(a)
+// socket.emit('receive', a)
+//   })
 
-})
+// })
