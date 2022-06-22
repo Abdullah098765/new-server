@@ -43,7 +43,7 @@ app.post('/message', function (req, res) {
 })
 
 
-app.get('/message', function (req, res) {
+app.get('https://check-app-d.herokuapp.com/', function (req, res) {
 
   console.log('data')
   res.send(md)
