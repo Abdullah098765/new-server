@@ -43,7 +43,7 @@ app.post('/message', function (req, res) {
 })
 
 
-app.get('https://check-app-d.herokuapp.com/', function (req, res) {
+app.get('/message', function (req, res) {
 
   console.log('data')
   res.send(md)
@@ -58,13 +58,13 @@ const io = new Server();
 
 app.set('port', process.env.PORT || 4000);
 const server = app.listen(app.get('port'), () => { console.log('Express ' + server.address().port) })
-// io.attach(server)
+io.attach(server)
 
-// io.on('connection',(socket)=>{
-//   console.log('connected')
-//   socket.on('send', (a)=>{
-// console.log(a)
-// socket.emit('receive', a)
-//   })
+io.on('connection',(socket)=>{
+  console.log('connected')
+  socket.on('send', (a)=>{
+console.log(a)
+socket.emit('receive', a)
+  })
 
-// })
+})
