@@ -40,7 +40,7 @@ setTimeout(()=>{
   console.log(data);
   console.error(err)
   })
-}, 3000)
+}, 1100)
 
 
 
