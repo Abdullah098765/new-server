@@ -7,15 +7,6 @@ const app = express();
 const { Server } = require("socket.io")
 // app.listen(process.env.PORT ||4001 );
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://testdb:testdb12345@testdb.nuqjg.mongodb.net/?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-  client.close();
-  console.log('connected')
-});
 
 
 
@@ -23,24 +14,33 @@ client.connect(err => {
 const { Schema } = mongoose;
 
 const textSchema = new Schema({
-  text:  String, 
+  text: String,
   timestamp: Number
 });
-textSchema.path('_id')
 
 const Model = mongoose.model('testdb', textSchema);
 
-setTimeout(()=>{
-  const doc = new Model({
-    text:'string123456',
-    timestamp: 65874974976
-  
-  });
-  doc.save((err, data)=>{
-  console.log(data);
+
+
+const url = "mongodb+srv://testdb:testdb12345@testdb.nuqjg.mongodb.net/?retryWrites=true&w=majority";
+
+mongoose.connect(url)
+const db = mongoose.connection
+
+db.on('error', function(err) {
   console.error(err)
-  })
-}, 1100)
+})
+db.on('open', (open)=>{
+console.log(open)
+
+
+
+})
+
+
+
+
+
 
 
 
@@ -80,12 +80,27 @@ io.attach(server)
 
 var list = []
 
-io.on('connection',(socket)=>{
+io.on('connection', (socket) => {
   console.log('connected')
-  socket.on('send', (a)=>{
-list.push(a)
-console.log(a)
-socket.emit('receive', a)
+  socket.on('send', (a) => {
+    list.push(a)
+    console.log(a)
+    socket.emit('receive', a)
+
+    const doc = new Model({
+      text: a.text,
+      timestamp: a.timestamp
+    
+    });
+    doc.save((err, data) => {
+      console.log(data);
+      console.error(err)
+    })
+
+
+
+
+
   })
 
 })
