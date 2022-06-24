@@ -98,7 +98,12 @@ io.on('connection', (socket) => {
 
 
 Model.watch().on('change', (data) => {
-  list.unshift(data.fullDocument)
+
+  if (!list.includes(data.fullDocument)) {
+    list.unshift(data.fullDocument)
+  }
+  else {console.log('same')}
+  
   console.log(list)
   socket.emit('receive', list)
 
