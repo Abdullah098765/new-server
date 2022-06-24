@@ -83,9 +83,8 @@ var list = []
 io.on('connection', (socket) => {
   console.log('connected')
   socket.on('send', (a) => {
-    list.push(a)
-    console.log(a)
-
+   
+   
     const doc = new Model({
       text: a.text,
       timestamp: a.timestamp
@@ -98,9 +97,10 @@ io.on('connection', (socket) => {
 
 
 
-Model.watch().on('change', data => {
-  console.log(data)
-  socket.emit('receive', data)
+Model.watch().on('change', (data) => {
+  list.unshift(data.fullDocument)
+  console.log(list)
+  socket.emit('receive', list)
 
 });
 
@@ -111,4 +111,3 @@ Model.watch().on('change', data => {
   })
 
 })
-console.log(365635635356)
