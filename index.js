@@ -99,7 +99,7 @@ io.on('connection', (socket) => {
 
 
 Model.watch().on('change', data => {
-  console.log(data)
+  console.log(data + '54252452452')
   socket.emit('receive', data)
 
 });
