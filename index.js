@@ -100,7 +100,7 @@ io.on('connection', (socket) => {
 Model.watch().on('change', (data) => {
 
   if (!list.includes(data.fullDocument.text)) {
-    list.unshift(data.fullDocument.text)
+    list.unshift(data.fullDocument)
   }
   else {console.log('same')}
   
