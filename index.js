@@ -85,7 +85,6 @@ io.on('connection', (socket) => {
   socket.on('send', (a) => {
     list.push(a)
     console.log(a)
-    socket.emit('receive', a)
 
     const doc = new Model({
       text: a.text,
@@ -96,6 +95,14 @@ io.on('connection', (socket) => {
       console.log(data);
       console.error(err)
     })
+
+
+
+Model.watch().on('change', data => {
+  console.log(data)
+  socket.emit('receive', data)
+
+});
 
 
 
