@@ -79,6 +79,7 @@ app.post('/roomdata', function (req, res) {
 
 var id_For_delet = ''
 
+console.log('Abdullah');
 app.post('/deleteroom', function (req, res) {
  id_For_delet =req.body.id
 
