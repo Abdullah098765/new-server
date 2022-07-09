@@ -27,22 +27,15 @@ const url = "mongodb+srv://testdb:testdb12345@testdb.nuqjg.mongodb.net/?retryWri
 mongoose.connect(url)
 const db = mongoose.connection
 
-db.on('error', function(err) {
+db.on('error', function (err) {
   console.error(err)
 })
-db.on('open', (open)=>{
-console.log(open)
+db.on('open', (open) => {
+  console.log(open)
 
 
 
 })
-
-
-
-
-
-
-
 
 
 app.use(bodyParser.json({
@@ -50,21 +43,52 @@ app.use(bodyParser.json({
 }));
 app.use(cors());
 
-var md = ''
-app.post('/message', function (req, res) {
 
-  console.log(req.body)
-  md = req.body
+
+
+
+
+
+
+var md = []
+
+
+app.post('/room', function (req, res) {
+
+  md.push(req.body)
   res.send('SF Post ')
 
 
 })
 
 
-app.get('/message', function (req, res) {
+app.get('/room', function (req, res) {
 
-  console.log('data')
   res.send(md)
+
+})
+
+
+
+
+app.post('/roomdata', function (req, res) {
+  const found = md.find(element => element.id === req.body.id)
+  res.send(found)
+})
+
+
+var id_For_delet = ''
+
+app.post('/deleteroom', function (req, res) {
+ id_For_delet =req.body.id
+
+})
+
+
+app.get('/deleteroom', function (req, res) {
+
+  res.send('id_For_delet')
+
 
 })
 
@@ -83,36 +107,43 @@ var list = []
 io.on('connection', (socket) => {
   console.log('connected')
   socket.on('send', (a) => {
-   
-   
-    const doc = new Model({
-      text: a.text,
-      timestamp: a.timestamp
+console.log(a);
     
-    });
-    doc.save((err, data) => {
-      console.log(data);
-      console.error(err)
-    })
-
-
-
-Model.watch().on('change', (data) => {
-
-  if (!list.includes(data.fullDocument.text)) {
-    list.unshift(data.fullDocument)
-  }
-  else {console.log('same')}
-  
-  console.log(list)
-  socket.emit('receive', list)
-
-});
-
-
-
-
 
   })
 
 })
+
+
+
+
+
+
+
+
+// const doc = new Model({
+//   text: a.text,
+//   timestamp: a.timestamp
+
+// });
+// doc.save((err, data) => {
+//   console.log(data);
+//   console.error(err)
+// })
+
+
+
+// Model.watch().on('change', (data) => {
+
+//   if (!list.includes(data.fullDocument.text)) {
+//     list.unshift(data.fullDocument)
+//   }
+//   else { console.log('same') }
+
+//   console.log(list)
+//   socket.emit('receive', list)
+
+// });
+
+
+
