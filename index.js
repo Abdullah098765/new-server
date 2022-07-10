@@ -57,8 +57,7 @@ app.post('/room', function (req, res) {
 
   md.push(req.body)
   res.send('SF Post ')
-
-
+console.log(req.body);
 })
 
 
