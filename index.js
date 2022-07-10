@@ -108,6 +108,7 @@ var list = []
 io.on('connection', (socket) => {
   console.log('connected')
   socket.on('send', (a) => {
+  socket.emit('receive', a)    
 console.log(a);
     
 
