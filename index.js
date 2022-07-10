@@ -99,8 +99,8 @@ const io = new Server();
 
 
 
-app.set('port', process.env.PORT || 'https://check-app-d.herokuapp.com');
-const server = app.listen(app.get('port'), () => { console.log(process.env.PORT + server.address().port) })
+app.set('port', process.env.PORT && 'https://check-app-d.herokuapp.com');
+const server = app.listen(app.get('port'), () => { console.log(server.address().port) })
 io.attach(server)
 
 var list = []
